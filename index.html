@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Banque de colère</title>
+    <meta charset="utf-8" />
+  </head>
+  <style>
+    h1{
+        text-align: center;
+    }
+
+    main {
+        /*justify-content: space-around;*/
+    }
+
+    main div{
+        margin-bottom: 10px;
+    }
+
+    main div section{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    main div p{
+        margin: 1px;
+    }
+
+    main div section p:nth-child(2){
+        text-transform: uppercase;
+        color: grays;
+    }
+  </style>
+  <body>
+    <h1>Banque de Colère</h1>
+    <main>
+        <div>
+            <section>
+                <p>C'était</p>
+                <p>[date]</p>
+            </section>
+            <p id="date"></p>
+        </div>
+        <div>
+            <section>
+                <p>Contre</p>
+                <p>[cible]</p>
+            </section>
+            <p id="cible"></p>
+        </div>
+        <div>
+            <section>
+                <p>Parceque</p>
+                <p>[motif]</p>
+            </section>
+            <p id="motif"></p>
+        </div>
+        <div>
+            <section>
+                <p>Alors que moi</p>
+                <p>[pensée]</p>
+            </section>
+            <p id="pensee"></p>
+        </div>
+        <div>
+            <section>
+                <p>Donc j'ai</p>
+                <p>[reaction]</p>
+            </section>
+            <p id="reaction"></p>
+        </div>
+        <div>
+            <section>
+                <p>Je me sentais</p>
+                <p>[sentiment]</p>
+            </section>
+            <p id="sentiment"></p>
+        </div>
+        <div>
+            <section>
+                <p>J'avais besoin de</p>
+                <p>[besoin]</p>
+            </section>
+            <p id="besoin"></p>
+        </div>
+        <div>
+            <button onclick="location.reload()">Recolérer</button>
+        </div>
+    </main>
+    <script>
+        var data,
+        date = document.querySelector('#date'),
+        cible = document.querySelector('#cible'),
+        motif = document.querySelector('#motif'),
+        pensee = document.querySelector('#pensee'),
+        reaction = document.querySelector('#reaction'),
+        sentiment = document.querySelector('#sentiment'),
+        besoin = document.querySelector('#besoin');
+
+        function absalom() {
+            let random = Math.round(Math.random() * 226)
+            return random
+        }
+
+        const options = {method: 'GET', headers: {Accept: 'application/json'}};
+            fetch('https://sheetdb.io/api/v1/ggmeyfytxpqqv', options)
+            .then(response => response.json())
+            .then(function(response) {
+                console.log(response)
+
+                data = response;
+                date.textContent = data[absalom()].date;
+                cible.textContent = data[absalom()].cible;
+                motif.textContent = data[absalom()].motif;
+                pensee.textContent = data[absalom()].pensee;
+                reaction.textContent = data[absalom()].reaction;
+                sentiment.textContent = data[absalom()].sentiment;
+                besoin.textContent = data[absalom()].besoin;
+            
+                return response
+            })
+            .catch(err => console.error(err));
+    </script>
+  </body>
+</html>
