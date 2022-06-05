@@ -5,32 +5,156 @@
     <meta charset="utf-8" />
   </head>
   <style>
-    h1{ 
-		font-family: monospace;
-        text-align: center;
+    h1{
+		  font-family: monospace;
+      text-align: center;
     }
 
     main {
-        /*justify-content: space-around;*/
+      font-size: 36px;
     }
 
     main div{
-        margin-bottom: 10px;
+      margin-bottom: 5px;
     }
 
     main div section{
-        display: flex;
-        justify-content: space-between;
+      display: flex;
+      justify-content: space-between;
     }
 
     main div p{
-        margin: 1px;
+      margin: 1px;
+      font-family: 'Hack';
+      width: fit-content;
+      transition: 1500ms;
     }
 
     main div section p:nth-child(2){
-        text-transform: uppercase;
-        color: grays;
+      text-transform: uppercase;
+      color: grays;
     }
+
+    button{
+      position: fixed;
+      bottom: 5%;
+      font-size: 50px;
+      margin: 0 35%;
+      width: 30%;
+    }
+
+    @font-face {
+    font-family: 'Hack';
+    src: url('fonts/Hack-Regular.ttf') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    }
+
+    .chel{
+      font-family: 'Chel';
+    }
+
+    @font-face {
+    font-family: 'Chel';
+    src: url('fonts/CheltenhamStd-Bold.woff2') format('woff2'),
+        url('fonts/CheltenhamStd-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    }
+
+    .chelItal{
+      font-family: 'Chel Ital';
+    }
+
+    @font-face {
+        font-family: 'Chel Ital';
+        src: url('fonts/CheltenhamStd-BoldCondIt.woff2') format('woff2'),
+            url('fonts/CheltenhamStd-BoldCondIt.woff') format('woff');
+        font-weight: bold;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    .suisseNeue{
+      font-family: 'Suisse Neue';
+    }
+
+    .suisseNeueBorder{
+      font-family: 'Suisse Neue';
+      border: 1px solid #000;
+      padding: 3px;
+    }
+
+    @font-face {
+        font-family: 'Suisse Neue';
+        src: url('fonts/SuisseNeue-Medium.woff2') format('woff2'),
+            url('fonts/SuisseNeue-Medium.woff') format('woff');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    .chelBold{
+      font-family: 'Chel Bold';
+    }
+
+    @font-face {
+        font-family: 'Chel Bold';
+        src: url('fonts/CheltenhamStd-BoldCond.woff2') format('woff2'),
+            url('fonts/CheltenhamStd-BoldCond.woff') format('woff');
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    .suisseNeueItal{
+      font-family: 'Suisse Neue Ital';
+    }
+
+    @font-face {
+        font-family: 'Suisse Neue Ital';
+        src: url('fonts/SuisseNeue-MediumItalic.woff2') format('woff2'),
+            url('fonts/SuisseNeue-MediumItalic.woff') format('woff');
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    .arialBold{
+      font-family: 'Arial Bold';
+    }
+
+    @font-face {
+        font-family: 'Arial Bold';
+        src: url('fonts/Arial-BoldMT.woff2') format('woff2'),
+            url('fonts/Arial-BoldMT.woff') format('woff');
+        font-weight: bold;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    .arialBlack{
+      font-family: 'Arial Black';
+    }
+
+    .arialBlackReversed{
+      font-family: 'Arial Black';
+      color: #fff;
+      background: #000;
+      padding: 3px;
+    }
+
+    @font-face {
+        font-family: 'Arial Black';
+        src: url('fonts/Arial-Black.woff2') format('woff2'),
+            url('fonts/Arial-Black.woff') format('woff');
+        font-weight: 900;
+        font-style: normal;
+        font-display: swap;
+    }
+
   </style>
   <body>
     <h1>Banque de Colère</h1>
@@ -85,7 +209,7 @@
             <p id="besoin"></p>
         </div>
         <div>
-            <button onclick="location.reload()">Recolérer</button>
+            <button onclick="bank()">Recolérer</button>
         </div>
     </main>
     <script>
@@ -96,11 +220,111 @@
         pensee = document.querySelector('#pensee'),
         reaction = document.querySelector('#reaction'),
         sentiment = document.querySelector('#sentiment'),
-        besoin = document.querySelector('#besoin');
+        besoin = document.querySelector('#besoin'),
+        types = ['chel','chelItal','chelBold','suisseNeue','suisseNeueItal','suisseNeueBorder','arialBold','arialBlack','arialBlackReversed'],
+        delay = 100,
+        j = 0;
 
         function absalom() {
             let random = Math.round(Math.random() * 226)
             return random
+        }
+
+        function type(colere) {
+          if (colere.classList.length > 0){
+            colere.classList.remove(colere.classList[0])
+          }
+          colere.classList.add(types[Math.floor(Math.random()*9)])
+        }
+
+        function resize(colere, colereLength) {
+          if (colereLength.length < 20) {
+            colere.style.fontSize = "60px";
+          } else {
+            colere.style.fontSize = "36px";
+          }
+        }
+
+        function fillBlank(colere, j){
+          if (j === 1){
+            colere.style.marginBottom = "10px"
+          } else {
+            if (colere.textContent === ""){
+              colere.style.marginBottom = "50px"
+            } else {
+              colere.style.marginBottom = "10px"
+            }
+          }
+        }
+
+        function typing(el, string){
+          for (let i = 1; i < string.length; i++){
+            setTimeout( function(){
+              string = string.toLowerCase();
+              el.textContent = string.substr(0, i + 1)
+            }, i*50)
+          }
+        }
+
+        function bank() {
+
+          setTimeout(function(){
+            let dateColere = data[absalom()].date;
+            typing(date, dateColere);
+            type(date);
+            fillBlank(date, j);
+            resize(date, dateColere);
+          }, 0)
+
+          setTimeout(function(){
+            let cibleColere = data[absalom()].cible;
+            typing(cible, cibleColere)
+            type(cible);
+            fillBlank(cible, j);
+            resize(cible, cibleColere);
+          }, delay)
+
+          setTimeout(function(){
+            let motifColere = data[absalom()].motif;
+            typing(motif, motifColere);
+            type(motif);
+            fillBlank(motif, j);
+            resize(motif, motifColere);
+          }, delay * 2)
+
+          setTimeout(function(){
+            let penseeColere = data[absalom()].pensee;
+            typing(pensee, penseeColere);
+            type(pensee);
+            fillBlank(pensee, j);
+            resize(pensee, penseeColere);
+          }, delay * 3)
+
+          setTimeout(function(){
+            let reactionColere = data[absalom()].reaction;
+            typing(reaction, reactionColere);
+            type(reaction);
+            fillBlank(reaction, j);
+            resize(reaction, reactionColere);
+          }, delay * 4)
+
+          setTimeout(function(){
+            let sentimentColere = data[absalom()].sentiment;
+            typing(sentiment, sentimentColere);
+            type(sentiment);
+            fillBlank(sentiment, j);
+            resize(sentiment, sentimentColere);
+          }, delay * 5)
+
+          setTimeout(function(){
+            let besoinColere = data[absalom()].besoin;
+            typing(besoin, besoinColere);
+            type(besoin);
+            fillBlank(besoin, j);
+            resize(besoin, besoinColere);
+          }, delay * 6)
+
+          j++
         }
 
         const options = {method: 'GET', headers: {Accept: 'application/json'}};
@@ -110,14 +334,9 @@
                 console.log(response)
 
                 data = response;
-                date.textContent = data[absalom()].date;
-                cible.textContent = data[absalom()].cible;
-                motif.textContent = data[absalom()].motif;
-                pensee.textContent = data[absalom()].pensee;
-                reaction.textContent = data[absalom()].reaction;
-                sentiment.textContent = data[absalom()].sentiment;
-                besoin.textContent = data[absalom()].besoin;
-            
+
+                bank()
+
                 return response
             })
             .catch(err => console.error(err));
